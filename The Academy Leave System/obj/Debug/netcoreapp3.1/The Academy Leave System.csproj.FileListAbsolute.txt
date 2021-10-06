@@ -1,0 +1,37 @@
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\bin\Debug\netcoreapp3.1\appsettings.json
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\bin\Debug\netcoreapp3.1\The Academy Leave System.exe
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\bin\Debug\netcoreapp3.1\The Academy Leave System.deps.json
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\bin\Debug\netcoreapp3.1\The Academy Leave System.runtimeconfig.json
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\bin\Debug\netcoreapp3.1\The Academy Leave System.runtimeconfig.dev.json
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\bin\Debug\netcoreapp3.1\The Academy Leave System.dll
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\bin\Debug\netcoreapp3.1\The Academy Leave System.pdb
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\bin\Debug\netcoreapp3.1\The Academy Leave System.Views.dll
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\bin\Debug\netcoreapp3.1\The Academy Leave System.Views.pdb
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.csprojAssemblyReference.cache
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.AssemblyInfoInputs.cache
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.AssemblyInfo.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.csproj.CoreCompileInputs.cache
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.RazorAssemblyInfo.cache
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.RazorAssemblyInfo.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\staticwebassets\The Academy Leave System.StaticWebAssets.Manifest.cache
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\staticwebassets\The Academy Leave System.StaticWebAssets.xml
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\scopedcss\bundle\The Academy Leave System.styles.css
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.TagHelpers.input.cache
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.TagHelpers.output.cache
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.RazorCoreGenerate.cache
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.RazorTargetAssemblyInfo.cache
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.RazorTargetAssemblyInfo.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.Views.pdb
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.dll
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.pdb
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.genruntimeconfig.cache
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.csproj.CopyComplete
