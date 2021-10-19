@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dlynam\\source\\repos\\The Academy Leave System\\The Academy Leave System\\The Academy Leave System.csproj": {}
+    "C:\\Users\\17794\\Source\\Repos\\davelynam-aws\\TheAcademyLeaveSystem\\The Academy Leave System\\The Academy Leave System.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dlynam\\source\\repos\\The Academy Leave System\\The Academy Leave System\\The Academy Leave System.csproj": {
+    "C:\\Users\\17794\\Source\\Repos\\davelynam-aws\\TheAcademyLeaveSystem\\The Academy Leave System\\The Academy Leave System.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dlynam\\source\\repos\\The Academy Leave System\\The Academy Leave System\\The Academy Leave System.csproj",
+        "projectUniqueName": "C:\\Users\\17794\\Source\\Repos\\davelynam-aws\\TheAcademyLeaveSystem\\The Academy Leave System\\The Academy Leave System.csproj",
         "projectName": "The Academy Leave System",
-        "projectPath": "C:\\Users\\dlynam\\source\\repos\\The Academy Leave System\\The Academy Leave System\\The Academy Leave System.csproj",
-        "packagesPath": "C:\\Users\\dlynam\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dlynam\\source\\repos\\The Academy Leave System\\The Academy Leave System\\obj\\",
+        "projectPath": "C:\\Users\\17794\\Source\\Repos\\davelynam-aws\\TheAcademyLeaveSystem\\The Academy Leave System\\The Academy Leave System.csproj",
+        "packagesPath": "C:\\Users\\17794\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\17794\\Source\\Repos\\davelynam-aws\\TheAcademyLeaveSystem\\The Academy Leave System\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\dlynam\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\17794\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
@@ -63,7 +63,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.206\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
