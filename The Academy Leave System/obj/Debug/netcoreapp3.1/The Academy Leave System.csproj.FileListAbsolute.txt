@@ -35,3 +35,6 @@ C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\o
 C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.pdb
 C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.genruntimeconfig.cache
 C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.csproj.CopyComplete
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.csproj.AssemblyReference.cache
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.MvcApplicationPartsAssemblyInfo.cs
