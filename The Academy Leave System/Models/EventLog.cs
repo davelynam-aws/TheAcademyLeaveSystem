@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace The_Academy_Leave_System.Models
 {
-    [Table("EventLog")]
+    [Table("EventLogs")]
     public class EventLog
     {
         [Key]

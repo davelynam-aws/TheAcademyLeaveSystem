@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,12 @@ namespace The_Academy_Leave_System
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private string _contentRootPath = "";
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _contentRootPath = env.ContentRootPath;
         }
 
         public IConfiguration Configuration { get; }
@@ -26,7 +30,23 @@ namespace The_Academy_Leave_System
         public void ConfigureServices(IServiceCollection services)
         {
             // Service registered to access the TALS database.
-            services.AddDbContext<DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TALSDatabase")));
+            string conn = Configuration.GetConnectionString("TALSDatabase");
+            if (conn.Contains("%CONTENTROOTPATH%"))
+            {
+                conn = conn.Replace("%CONTENTROOTPATH%", _contentRootPath);
+            }
+            // Add framework services.
+            services.AddDbContext<DBContext>(options =>
+                options.UseSqlServer(conn));  //use conn
+
+            Action<User> currentUser = (opt =>
+            {
+
+            });
+
+            services.Configure(currentUser);
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<User>>().Value);
+    
 
             // This service allows us to step through razor pages when live debugging in the browser.
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
@@ -50,7 +70,7 @@ namespace The_Academy_Leave_System
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -58,6 +78,7 @@ namespace The_Academy_Leave_System
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

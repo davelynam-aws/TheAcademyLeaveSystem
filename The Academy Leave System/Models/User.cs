@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace The_Academy_Leave_System.Models
 {
-    [Table("User")]
+    [Table("Users")]
     public class User
     {
         [Key]
@@ -43,5 +43,9 @@ namespace The_Academy_Leave_System.Models
 
         [Column(name: "LastLoggedInDateTime")]
         public DateTime LastLoggedInDateTime { get; set; }
+
+        [NotMapped]
+        public string Password { get; set; }
+
     }
 }

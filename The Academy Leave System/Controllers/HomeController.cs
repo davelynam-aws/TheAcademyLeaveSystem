@@ -1,25 +1,45 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using The_Academy_Leave_System.Methods;
 using The_Academy_Leave_System.Models;
 
 namespace The_Academy_Leave_System.Controllers
 {
+    //[Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        // Register db context for TALS database.
+        private readonly DBContext _db;
+
+        
+
+        public HomeController(ILogger<HomeController> logger, DBContext dBContext, User currentUser)
         {
             _logger = logger;
+            _db = dBContext;
+  
         }
 
         public IActionResult Index()
         {
+
+            List<User> userList = _db.Users.ToList();
+
+            // Hash
+            var hash = SecurePasswordHasher.Hash("Password1");
+
+            // Verify
+            var result = SecurePasswordHasher.Verify("Password1", hash);
+
+
             return View();
         }
 

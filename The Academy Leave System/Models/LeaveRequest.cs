@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace The_Academy_Leave_System.Models
 {
-    [Table("LeaveRequest")]
+    [Table("LeaveRequests")]
     public class LeaveRequest
     {
         [Key]
