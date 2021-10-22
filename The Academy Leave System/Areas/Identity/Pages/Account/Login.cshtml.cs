@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using The_Academy_Leave_System.Areas.Identity.Data;
+using The_Academy_Leave_System.Methods;
+using The_Academy_Leave_System.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace The_Academy_Leave_System.Areas.Identity.Pages.Account
 {
@@ -22,13 +25,21 @@ namespace The_Academy_Leave_System.Areas.Identity.Pages.Account
         private readonly SignInManager<TALSIdentity> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
+        // Register db context for TALS database.
+        private readonly DBContext _db;
+        private User _currentUser;
+
         public LoginModel(SignInManager<TALSIdentity> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<TALSIdentity> userManager)
+            UserManager<TALSIdentity> userManager,
+            DBContext dBContext,
+            User currentUser)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _db = dBContext;
+            _currentUser = currentUser;
         }
 
         [BindProperty]
@@ -78,6 +89,51 @@ namespace The_Academy_Leave_System.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+
+                //var hash = SecurePasswordHasher.Hash(Input.Password);
+
+                var retrievedHash = _db.Users.Where(u => u.Email == Input.Email).Select(u => u.PasswordHash).Single();
+
+                if (retrievedHash != null)
+                {
+                    var verifyResult = SecurePasswordHasher.Verify(Input.Password, retrievedHash);
+
+                    if (verifyResult == true)
+                    {
+                        // Authentication successful.
+
+                       
+                        _currentUser = _db.Users.Where(u => u.Email == Input.Email).Single();
+
+                        _currentUser.LastLoggedInDateTime = DateTime.Now;
+
+                        //Update the db and save.
+                        _db.Entry(_currentUser).State = EntityState.Modified;
+                        _db.SaveChanges();
+
+                        UserMethods.SetCurrentUserVariables(_currentUser);
+
+                        _logger.LogInformation("User logged in.");
+                        return LocalRedirect(returnUrl);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        return Page();
+                    }
+
+
+                    // Authentication successful.
+                    //await _signInManager.SignInAsync(User, isPersistent: true);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
+                }
+
+
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
@@ -86,16 +142,16 @@ namespace The_Academy_Leave_System.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
-                }
-                else
+                //if (result.RequiresTwoFactor)
+                //{
+                //    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                //}
+                //if (result.IsLockedOut)
+                //{
+                //    _logger.LogWarning("User account locked out.");
+                //    return RedirectToPage("./Lockout");
+                //}
+                //else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();

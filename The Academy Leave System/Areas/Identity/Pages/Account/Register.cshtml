@@ -7,7 +7,7 @@
 <h1>@ViewData["Title"]</h1>
 
 <div class="row">
-    <div class="col-md-4">
+    @*<div class="col-md-4">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h4>Create a new account.</h4>
             <hr />
@@ -29,19 +29,19 @@
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
-    </div>
+    </div>*@
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h4>Use another service to register.</h4>
+            @*<h4>Use another service to register.</h4>*@
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
                     <div>
                         <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
+                            User accounts are managed by the system administrators. If you have not been given access to this system, please get in contact by using the email below.
                         </p>
+                        <a href="mailto:talsadmins@theacademy.com">talsadmins@theacademy.com</a>
                     </div>
                 }
                 else

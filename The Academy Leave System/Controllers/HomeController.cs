@@ -18,20 +18,31 @@ namespace The_Academy_Leave_System.Controllers
 
         // Register db context for TALS database.
         private readonly DBContext _db;
-
         
 
-        public HomeController(ILogger<HomeController> logger, DBContext dBContext, User currentUser)
+        public HomeController(ILogger<HomeController> logger, DBContext dBContext)
         {
             _logger = logger;
             _db = dBContext;
-  
         }
 
         public IActionResult Index()
         {
+            // If the user is not logged in then always redirect to the login page.
+            // This should be present on each page to prevent unauthorised access and errors.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");   
+            }
 
-            List<User> userList = _db.Users.ToList();
+
+
+            int userCount = _db.Users.Count();
+
+
+
+            List<User> userList = new List<User>();
+            userList = _db.Users.ToList();
 
             // Hash
             var hash = SecurePasswordHasher.Hash("Password1");
