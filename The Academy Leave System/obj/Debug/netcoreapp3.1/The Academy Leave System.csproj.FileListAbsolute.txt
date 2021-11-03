@@ -436,3 +436,8 @@ C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\o
 C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.pdb
 C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\The Academy Leave System.genruntimeconfig.cache
 C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ForgotPassword.cshtml.g.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\Users\Create.cshtml.g.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\Users\Delete.cshtml.g.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\Users\Details.cshtml.g.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\Users\Edit.cshtml.g.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\Users\Index.cshtml.g.cs

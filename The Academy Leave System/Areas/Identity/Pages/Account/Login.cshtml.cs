@@ -111,7 +111,9 @@ namespace The_Academy_Leave_System.Areas.Identity.Pages.Account
                         _db.Entry(_currentUser).State = EntityState.Modified;
                         _db.SaveChanges();
 
-                        UserMethods.SetCurrentUserVariables(_currentUser);
+                        UserMethods.SetCurrentUserVariables(_currentUser, _db);
+
+               
 
                         _logger.LogInformation("User logged in.");
                         return LocalRedirect(returnUrl);

@@ -33,5 +33,11 @@ namespace The_Academy_Leave_System.Models
         //public static DateTime LastLoggedInDateTime { get; set; }
 
         //public static string Password { get; set; }
+
+        public static int RoleId { get; set; }
+
+        public static string Role { get; set; }
+
+
     }
 }

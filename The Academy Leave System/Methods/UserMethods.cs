@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,14 +8,20 @@ using The_Academy_Leave_System.Models;
 namespace The_Academy_Leave_System.Methods
 {
     public static class UserMethods
+
+
+
     {
-        public static void SetCurrentUserVariables(User user)
+        public static void SetCurrentUserVariables(User user, DBContext _db)
         {
             CurrentUser.Email = user.Email;
             CurrentUser.FirstName = user.FirstName;
             CurrentUser.LastName = user.LastName;
-            CurrentUser.Id = CurrentUser.Id = user.Id;
-            
+            CurrentUser.Id = user.Id;
+            CurrentUser.RoleId = user.RoleId;
+
+            // Get Role name from role Id.
+            CurrentUser.Role = _db.Roles.Where(r => r.Id == CurrentUser.RoleId).Select(r => r.RoleName).ToString();
         }
 
         public static void ClearCurrentUserVariables()
@@ -24,5 +31,7 @@ namespace The_Academy_Leave_System.Methods
             CurrentUser.LastName = null;
             CurrentUser.Id = 0;
         }
+
+
     }
 }
