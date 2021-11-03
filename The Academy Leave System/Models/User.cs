@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -20,28 +21,39 @@ namespace The_Academy_Leave_System.Models
         [Column(name: "RoleId")]
         public int RoleId { get; set; }
 
+        [Required]
         [Column(name: "FirstName")]
+        [DisplayName("Fist Name")]
         public string FirstName { get; set; }
 
+        [Required]
         [Column(name: "LastName")]
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
 
+        
         [Column(name: "IsActive")]
         public bool IsActive { get; set; }
 
+        [Required]
         [Column(name: "LeaveAllowanceThisYear")]
         public decimal LeaveAllowanceThisYear { get; set; }
 
+        [Required]
         [Column(name: "LeaveAllowanceNextYear")]
         public decimal LeaveAllowanceNextYear { get; set; }
 
+        [Required]
         [Column(name: "Email")]
+        [DisplayName("Email")]
         public string Email { get; set; }
+
 
         [Column(name: "PasswordHash")]
         public string PasswordHash { get; set; }
 
         [Column(name: "LastLoggedInDateTime")]
+        [DisplayName("Last Logged In")]
         public DateTime LastLoggedInDateTime { get; set; }
 
         [NotMapped]

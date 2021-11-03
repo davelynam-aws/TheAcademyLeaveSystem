@@ -4,27 +4,27 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>User Management</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New User</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.TeamId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RoleId)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.FirstName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LastName)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.IsActive)
             </th>
             <th>
@@ -32,13 +32,13 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LeaveAllowanceNextYear)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.PasswordHash)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.LastLoggedInDateTime)
             </th>
@@ -48,33 +48,33 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TeamId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoleId)
-            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.TeamId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoleId)
+        </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LeaveAllowanceThisYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LeaveAllowanceNextYear)
-            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>*@
+            @*<td>
+            @Html.DisplayFor(modelItem => item.LeaveAllowanceThisYear)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LeaveAllowanceNextYear)
+        </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PasswordHash)
-            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.PasswordHash)
+        </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.LastLoggedInDateTime)
             </td>

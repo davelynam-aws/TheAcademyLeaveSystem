@@ -20,8 +20,10 @@ namespace The_Academy_Leave_System.Methods
             CurrentUser.Id = user.Id;
             CurrentUser.RoleId = user.RoleId;
 
+            var roles = _db.Roles.ToList();
+
             // Get Role name from role Id.
-            CurrentUser.Role = _db.Roles.Where(r => r.Id == CurrentUser.RoleId).Select(r => r.RoleName).ToString();
+            CurrentUser.Role = _db.Roles.Where(r => r.Id == CurrentUser.RoleId).Select(r => r.RoleName).Single();
         }
 
         public static void ClearCurrentUserVariables()
