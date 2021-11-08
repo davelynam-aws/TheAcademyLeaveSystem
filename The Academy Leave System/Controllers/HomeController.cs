@@ -18,13 +18,13 @@ namespace The_Academy_Leave_System.Controllers
         private readonly ILogger<HomeController> _logger;
 
         // Register db context for TALS database.
-        private readonly DBContext _db;
+        private readonly DBContext _context;
         
 
         public HomeController(ILogger<HomeController> logger, DBContext dBContext)
         {
             _logger = logger;
-            _db = dBContext;
+            _context = dBContext;
         }
 
         public IActionResult Index()
@@ -39,8 +39,8 @@ namespace The_Academy_Leave_System.Controllers
             }
 
 
-            userViewModel.ThisUser = _db.Users.Where(u => u.Id == CurrentUser.Id).Single();
-            userViewModel.MyLeaveRequests = _db.LeaveRequests.Where(l => l.UserId == CurrentUser.Id).ToList();
+            userViewModel.ThisUser = _context.Users.Where(u => u.Id == CurrentUser.Id).Single();
+            userViewModel.MyLeaveRequests = _context.LeaveRequests.Where(l => l.UserId == CurrentUser.Id).ToList();
 
 
             return View(userViewModel);

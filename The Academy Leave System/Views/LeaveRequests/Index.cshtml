@@ -1,0 +1,95 @@
+﻿@model IEnumerable<The_Academy_Leave_System.Models.LeaveRequest>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestedLeaveStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestedLeaveEndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalDaysRequested)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.HalfDayIdentification)
+            </th>*@
+            @*<th>
+                @Html.DisplayNameFor(model => model.ApprovedDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RejectedDateTime)
+            </th>*@
+            @*<th>
+                @Html.DisplayNameFor(model => model.ManagerNotified)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserNotified)
+            </th>*@
+            @*<th>
+                @Html.DisplayNameFor(model => model.IsCancelled)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestedLeaveStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestedLeaveEndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalDaysRequested)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.HalfDayIdentification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApprovedDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RejectedDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManagerNotified)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserNotified)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCancelled)
+            </td>*@
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
