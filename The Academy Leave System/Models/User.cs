@@ -48,7 +48,6 @@ namespace The_Academy_Leave_System.Models
         [DisplayName("Email")]
         public string Email { get; set; }
 
-
         [Column(name: "PasswordHash")]
         public string PasswordHash { get; set; }
 
@@ -57,7 +56,16 @@ namespace The_Academy_Leave_System.Models
         public DateTime LastLoggedInDateTime { get; set; }
 
         [NotMapped]
+        //[Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        [NotMapped]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "The confirmed password doesn't match, please try again.")]
+        public string ConfirmPassword { get; set; }
+
+    
 
     }
 }
