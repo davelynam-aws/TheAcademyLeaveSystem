@@ -1,8 +1,27 @@
-﻿@{
+﻿@model The_Academy_Leave_System.ViewModels.UserViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">@CurrentUser.FirstName @CurrentUser.LastName</h1>
-    <p>Content to go here. User leave etc.</p>
+    <hr/>
+
+
+
+
+    <h3>Leave Allowance This Year: @Model.ThisUser.LeaveAllowanceThisYear Days</h3>
+    <h3>Days Booked This Year: </h3>
+    <h3>Days Left This Year:</h3>
+    <hr/>
+    <h3>Leave Allowance Next Year: @Model.ThisUser.LeaveAllowanceNextYear Days</h3>
+    <h3>Days Booked Next Year: </h3>
+    <h3>Days Left Next Year:</h3>
+
+
+
+
+
+
 </div>

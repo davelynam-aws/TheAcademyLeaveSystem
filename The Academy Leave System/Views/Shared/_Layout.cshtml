@@ -23,7 +23,7 @@
 
                     <partial name="_LoginPartial.cshtml" />
                     <ul class="navbar-nav flex-grow-1">
-                        @if (CurrentUser.FirstName != null)
+                        @if (CurrentUser.Email != null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">My Annual Leave</a>

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using The_Academy_Leave_System.Methods;
 using The_Academy_Leave_System.Models;
+using The_Academy_Leave_System.ViewModels;
 
 namespace The_Academy_Leave_System.Controllers
 {
@@ -28,6 +29,8 @@ namespace The_Academy_Leave_System.Controllers
 
         public IActionResult Index()
         {
+            UserViewModel userViewModel = new UserViewModel();
+
             // If the user is not logged in then always redirect to the login page.
             // This should be present on each page to prevent unauthorised access and errors.
             if (CurrentUser.Email == null)
@@ -36,22 +39,11 @@ namespace The_Academy_Leave_System.Controllers
             }
 
 
-
-            int userCount = _db.Users.Count();
-
-
-
-            List<User> userList = new List<User>();
-            userList = _db.Users.ToList();
-
-            // Hash
-            var hash = SecurePasswordHasher.Hash("Password1");
-
-            // Verify
-            var result = SecurePasswordHasher.Verify("Password1", hash);
+            userViewModel.ThisUser = _db.Users.Where(u => u.Id == CurrentUser.Id).Single();
+            userViewModel.MyLeaveRequests = _db.LeaveRequests.Where(l => l.UserId == CurrentUser.Id).ToList();
 
 
-            return View();
+            return View(userViewModel);
         }
 
         public IActionResult Privacy()

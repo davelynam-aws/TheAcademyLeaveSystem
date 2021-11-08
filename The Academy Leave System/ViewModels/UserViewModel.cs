@@ -18,14 +18,15 @@ namespace The_Academy_Leave_System.ViewModels
         [Display(Name = "Role")]
         public List<SelectListItem> RoleOptions = new List<SelectListItem>();
 
-        //[Required]
-        //public string Password { get; set; }
 
-        //[Required]
-        //[DataType(DataType.Password)]
-        //public string ConfirmPassword { get; set; }
+        // Historical Leave Requests for this user.
+        public List<LeaveRequest> MyLeaveRequests { get; set; }
 
+        // Historical Event logs for this user.
+        public List<EventLog> MyEventLogs { get; set; }
 
+        // Newly created leave request
+        public LeaveRequest ThisLeaveRequest { get; set; }
 
 
         // Constructor to create a new user object.

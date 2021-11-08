@@ -20,9 +20,11 @@ namespace The_Academy_Leave_System.Models
         [Column(name:"CreatedDateTime")]
         public DateTime CreatedDateTime { get; set; }
 
+        [Required]
         [Column(name:"RequestedLeaveStartDate")]
         public DateTime RequestedLeaveStartDate { get; set; }
 
+        [Required]
         [Column(name:"RequestedLeaveEndDate")]
         public DateTime RequestedLeaveEndDate { get; set; }
 
