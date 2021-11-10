@@ -12,15 +12,15 @@
 
     <h3>This Year @DateTime.Now.Year</h3>
     <h4>Leave Allowance: @Model.ThisUser.LeaveAllowanceThisYear Days</h4>
-    <h4>Days Booked: @Model.</h4>
-    <h4>Days Awaiting Approval: </h4>
-    <h4>Days Left:</h4>
+    <h4>Days Booked: @Model.LeaveBookedThisYear</h4>
+    <h4>Days Awaiting Approval: @Model.LeaveAwaitingApprovalThisYear</h4>
+    <h4>Days Left: @Model.LeaveLeftThisYear</h4>
     <hr />
     <h3>Next Year @DateTime.Now.AddYears(1).Year</h3>
     <h4>Leave Allowance: @Model.ThisUser.LeaveAllowanceNextYear Days</h4>
-    <h4>Days Booked: </h4>
-    <h4>Days Awaiting Approval: </h4>
-    <h4>Days Left:</h4>
+    <h4>Days Booked: @Model.LeaveBookedNextYear</h4>
+    <h4>Days Awaiting Approval: @Model.LeaveAwaitingApprovalNextYear</h4>
+    <h4>Days Left: @Model.LeaveLeftNextYear</h4>
 
 
 

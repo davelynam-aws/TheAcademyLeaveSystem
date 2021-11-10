@@ -40,21 +40,22 @@ namespace The_Academy_Leave_System.Controllers
 
        
             DateTime startOfNextYear = DateTime.Parse($"01/01/{DateTime.Now.AddYears(1).Year}");
+            DateTime nullDateTime = DateTime.Parse("01/01/1753");
 
             userViewModel.ThisUser = _context.Users.Where(u => u.Id == CurrentUser.Id).Single();
             userViewModel.MyLeaveRequests = _context.LeaveRequests.Where(l => l.UserId == CurrentUser.Id).ToList();
 
-            userViewModel.LeaveAwaitingApprovalThisYear = _context.LeaveRequests.Where(l => l.UserId == CurrentUser.Id && l.ApprovedDateTime == DateTime.Parse("01/01/1753") && l.RejectedDateTime == DateTime.Parse("01/01/1753") && l.RequestedLeaveEndDate < startOfNextYear).Select(l => l.TotalDaysRequested).Sum();
+            userViewModel.LeaveAwaitingApprovalThisYear = _context.LeaveRequests.Where(l => l.UserId == CurrentUser.Id && l.ApprovedDateTime == nullDateTime && l.RejectedDateTime == nullDateTime && l.RequestedLeaveEndDate < startOfNextYear && l.IsCancelled == false).Select(l => l.TotalDaysRequested).Sum();
 
-            userViewModel.LeaveAwaitingApprovalNextYear = _context.LeaveRequests.Where(l => l.UserId == CurrentUser.Id && l.ApprovedDateTime == DateTime.Parse("01/01/1753") && l.RejectedDateTime == DateTime.Parse("01/01/1753") && l.RequestedLeaveStartDate >= startOfNextYear).Select(l => l.TotalDaysRequested).Sum();
+            userViewModel.LeaveAwaitingApprovalNextYear = _context.LeaveRequests.Where(l => l.UserId == CurrentUser.Id && l.ApprovedDateTime == nullDateTime && l.RejectedDateTime == nullDateTime && l.RequestedLeaveStartDate >= startOfNextYear && l.IsCancelled == false).Select(l => l.TotalDaysRequested).Sum();
 
-            userViewModel.LeaveBookedThisYear = _context.LeaveRequests.Where(l => l.UserId == CurrentUser.Id && l.ApprovedDateTime != DateTime.Parse("01/01/1753") && l.RejectedDateTime == DateTime.Parse("01/01/1753") && l.RequestedLeaveEndDate < startOfNextYear).Select(l => l.TotalDaysRequested).Sum();
+            userViewModel.LeaveBookedThisYear = _context.LeaveRequests.Where(l => l.UserId == CurrentUser.Id && l.ApprovedDateTime != nullDateTime && l.RejectedDateTime == nullDateTime && l.RequestedLeaveEndDate < startOfNextYear && l.IsCancelled == false).Select(l => l.TotalDaysRequested).Sum();
 
-            userViewModel.LeaveBookedNextYear = _context.LeaveRequests.Where(l => l.UserId == CurrentUser.Id && l.ApprovedDateTime == DateTime.Parse("01/01/1753") && l.RejectedDateTime == DateTime.Parse("01/01/1753") && l.RequestedLeaveStartDate >= startOfNextYear).Select(l => l.TotalDaysRequested).Sum();
+            userViewModel.LeaveBookedNextYear = _context.LeaveRequests.Where(l => l.UserId == CurrentUser.Id && l.ApprovedDateTime == nullDateTime && l.RejectedDateTime == nullDateTime && l.RequestedLeaveStartDate >= startOfNextYear && l.IsCancelled == false).Select(l => l.TotalDaysRequested).Sum();
 
-            userViewModel.LeaveLeftThisYear = userViewModel.ThisUser.LeaveAllowanceThisYear - userViewModel.LeaveBookedThisYear;
+            userViewModel.LeaveLeftThisYear = userViewModel.ThisUser.LeaveAllowanceThisYear - userViewModel.LeaveBookedThisYear - userViewModel.LeaveAwaitingApprovalThisYear;
 
-            userViewModel.LeaveLeftNextYear = userViewModel.ThisUser.LeaveAllowanceNextYear - userViewModel.LeaveBookedNextYear;
+            userViewModel.LeaveLeftNextYear = userViewModel.ThisUser.LeaveAllowanceNextYear - userViewModel.LeaveBookedNextYear - userViewModel.LeaveAwaitingApprovalNextYear;
 
             return View(userViewModel);
         }
