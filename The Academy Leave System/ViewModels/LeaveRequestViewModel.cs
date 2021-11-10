@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using The_Academy_Leave_System.Models;
@@ -10,7 +12,16 @@ namespace The_Academy_Leave_System.ViewModels
     {
         public LeaveRequest ThisLeaveRequest { get; set; }
 
+        [Display(Name = "AM/PM")]
+        public List<SelectListItem> HalfDayIdentifierOptions = new List<SelectListItem>()
+        {          
+            new SelectListItem() { Text="AM", Value="AM"},
+            new SelectListItem() { Text="PM", Value="PM"},
+            new SelectListItem() { Text="N/A", Value="N/A"},
+        };
 
+        
+        public string Status { get; set; }
 
 
     }

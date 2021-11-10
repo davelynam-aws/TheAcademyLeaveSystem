@@ -17,20 +17,30 @@ namespace The_Academy_Leave_System.Models
         [Column(name:"UserId")]
         public int UserId { get; set; }
 
+        [Display(Name = "Request Date")]
         [Column(name:"CreatedDateTime")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime CreatedDateTime { get; set; }
 
         [Required]
+        [Display(Name = "Start Date")]
+        [DataType(DataType.Date)]
         [Column(name:"RequestedLeaveStartDate")]
-        public DateTime RequestedLeaveStartDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime? RequestedLeaveStartDate { get; set; }
 
         [Required]
+        [Display(Name = "End Date")]
+        [DataType(DataType.Date)]
         [Column(name:"RequestedLeaveEndDate")]
-        public DateTime RequestedLeaveEndDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime? RequestedLeaveEndDate { get; set; }
 
+        [Display(Name = "Days Requested")]
         [Column(name:"TotalDaysRequested")]
         public decimal TotalDaysRequested { get; set; }
 
+        [Display(Name = "AM/PM")]
         [Column(name:"HalfDayIdentification")]
         public string HalfDayIdentification { get; set; }
 

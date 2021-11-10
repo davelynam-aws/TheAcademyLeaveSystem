@@ -55,7 +55,7 @@ namespace The_Academy_Leave_System.Controllers
             List<SelectListItem> roleList = new List<SelectListItem>();
 
             // Add first entry to role select list that cannot be selected.
-            roleList.Add(new SelectListItem { Selected = true, Disabled = true, Value = "-1", Text = "-- Select a Role --" });
+            // roleList.Add(new SelectListItem { Selected = true, Disabled = true, Value = "-1", Text = "-- Select a Role --" });
 
             // Populate select list with roles.
             foreach (Role role in roles)
@@ -77,7 +77,7 @@ namespace The_Academy_Leave_System.Controllers
             List<SelectListItem> teamList = new List<SelectListItem>();
 
             // Add first entry to role select list that cannot be selected.
-            teamList.Add(new SelectListItem { Selected = true, Disabled = true, Value = "-1", Text = "-- Select a Team --" });
+            // teamList.Add(new SelectListItem { Selected = true, Disabled = true, Value = "-1", Text = "-- Select a Team --" });
 
             // Populate select list with roles.
             foreach (Team team in teams)

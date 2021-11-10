@@ -1,72 +1,81 @@
-﻿@model The_Academy_Leave_System.Models.LeaveRequest
+﻿@model The_Academy_Leave_System.ViewModels.LeaveRequestViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Create New Leave Request</h1>
 
-<h4>LeaveRequest</h4>
+@*<h4>LeaveRequest</h4>*@
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @*<div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
+            <label asp-for="UserId" class="control-label"></label>
+            <input asp-for="UserId" class="form-control" />
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CreatedDateTime" class="control-label"></label>
+            <input asp-for="CreatedDateTime" class="form-control" />
+            <span asp-validation-for="CreatedDateTime" class="text-danger"></span>
+        </div>*@
+
+            @*Hidden field for disabled input.*@
+            @Html.HiddenFor(m => m.ThisLeaveRequest.TotalDaysRequested, new { id = "HiddenTotalDaysRequested" })
+
+            <div class="form-group">
+                <label asp-for="ThisLeaveRequest.RequestedLeaveStartDate" class="control-label"></label>
+                <input id="RequestedLeaveStartDate" asp-for="ThisLeaveRequest.RequestedLeaveStartDate" class="form-control" />
+                <span asp-validation-for="ThisLeaveRequest.RequestedLeaveStartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreatedDateTime" class="control-label"></label>
-                <input asp-for="CreatedDateTime" class="form-control" />
-                <span asp-validation-for="CreatedDateTime" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="RequestedLeaveStartDate" class="control-label"></label>
-                <input asp-for="RequestedLeaveStartDate" class="form-control" />
-                <span asp-validation-for="RequestedLeaveStartDate" class="text-danger"></span>
+                <label asp-for="ThisLeaveRequest.RequestedLeaveEndDate" class="control-label"></label>
+                <input id="RequestedLeaveEndDate" asp-for="ThisLeaveRequest.RequestedLeaveEndDate" class="form-control" />
+                <span asp-validation-for="ThisLeaveRequest.RequestedLeaveEndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RequestedLeaveEndDate" class="control-label"></label>
-                <input asp-for="RequestedLeaveEndDate" class="form-control" />
-                <span asp-validation-for="RequestedLeaveEndDate" class="text-danger"></span>
+                <label asp-for="ThisLeaveRequest.TotalDaysRequested" class="control-label"></label>
+                <input id="TotalDaysRequested" asp-for="ThisLeaveRequest.TotalDaysRequested" class="form-control" disabled />
+                <span asp-validation-for="ThisLeaveRequest.TotalDaysRequested" class="text-danger"></span>
             </div>
+            <div id="HalfDayIdentificationDiv" class="form-group" style="display:none">
+                <label asp-for="ThisLeaveRequest.HalfDayIdentification" class="control-label"></label>
+                @*<input id="HalfDayIdentification" asp-for="HalfDayIdentifierOptions" class="form-control" />*@
+                <select asp-for="ThisLeaveRequest.HalfDayIdentification" class="form-control" asp-items="Model.HalfDayIdentifierOptions">
+                    <option value="-1" selected disabled>-- Select AM or PM For Half Day --</option>
+                </select>
+                <span asp-validation-for="ThisLeaveRequest.HalfDayIdentification" class="text-danger"></span>
+            </div>
+
+
             @*<div class="form-group">
-                <label asp-for="TotalDaysRequested" class="control-label"></label>
-                <input asp-for="TotalDaysRequested" class="form-control" />
-                <span asp-validation-for="TotalDaysRequested" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="HalfDayIdentification" class="control-label"></label>
-                <input asp-for="HalfDayIdentification" class="form-control" />
-                <span asp-validation-for="HalfDayIdentification" class="text-danger"></span>
-            </div>
-            @*<div class="form-group">
-                <label asp-for="ApprovedDateTime" class="control-label"></label>
-                <input asp-for="ApprovedDateTime" class="form-control" />
-                <span asp-validation-for="ApprovedDateTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RejectedDateTime" class="control-label"></label>
-                <input asp-for="RejectedDateTime" class="form-control" />
-                <span asp-validation-for="RejectedDateTime" class="text-danger"></span>
-            </div>*@
+            <label asp-for="ApprovedDateTime" class="control-label"></label>
+            <input asp-for="ApprovedDateTime" class="form-control" />
+            <span asp-validation-for="ApprovedDateTime" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="RejectedDateTime" class="control-label"></label>
+            <input asp-for="RejectedDateTime" class="form-control" />
+            <span asp-validation-for="RejectedDateTime" class="text-danger"></span>
+        </div>*@
             @*<div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ManagerNotified" /> @Html.DisplayNameFor(model => model.ManagerNotified)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="UserNotified" /> @Html.DisplayNameFor(model => model.UserNotified)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsCancelled" /> @Html.DisplayNameFor(model => model.IsCancelled)
-                </label>
-            </div>*@
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="ManagerNotified" /> @Html.DisplayNameFor(model => model.ManagerNotified)
+            </label>
+        </div>
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="UserNotified" /> @Html.DisplayNameFor(model => model.UserNotified)
+            </label>
+        </div>
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="IsCancelled" /> @Html.DisplayNameFor(model => model.IsCancelled)
+            </label>
+        </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -81,3 +90,83 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+        asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+        asp-fallback-test="window.jQuery"
+        crossorigin="anonymous"
+        integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+</script>
+<script>
+
+    // Update total days on hald day selection.
+    $('#HalfDayIdentifierOptions').change(function () {
+        console.log($('#TotalDaysRequested').val())
+        if ($('#TotalDaysRequested').val() == '1.00') {
+            if ($('#HalfDayIdentifierOptions').find(':selected').text() == "AM" || $('#HalfDayIdentifierOptions').find(':selected').text() == "PM") {
+                $('#TotalDaysRequested').val('0.5');
+                $('#HiddenTotalDaysRequested').val('0.5');
+
+            }
+        }
+        if ($('#TotalDaysRequested').val() == '0.5') {
+            if ($('#HalfDayIdentifierOptions').find(':selected').text() == "N/A") {
+                $('#TotalDaysRequested').val('1.00');
+                $('#HiddenTotalDaysRequested').val('1.00');
+            }
+        }
+    });
+
+
+        // Update total days requested from selection.
+        $('#RequestedLeaveStartDate').on('input', function (e) {
+            if ($('#RequestedLeaveStartDate').val() != '' && $('#RequestedLeaveEndDate').val() != '') {
+                $('#TotalDaysRequested').val(getBusinessDatesCount($('#RequestedLeaveStartDate').val(), $('#RequestedLeaveEndDate').val()))
+            }
+        });
+
+        // Update total days requested from selection.
+        $('#RequestedLeaveEndDate').on('input', function (e) {
+            if ($('#RequestedLeaveStartDate').val() != '' && $('#RequestedLeaveEndDate').val() != '') {
+                $('#TotalDaysRequested').val(getBusinessDatesCount($('#RequestedLeaveStartDate').val(), $('#RequestedLeaveEndDate').val()))
+            }
+        });
+
+
+        //Get working days between two dates.
+        function getBusinessDatesCount(startDate, endDate) {
+
+            var startDate = new Date(startDate);
+            var endDate = new Date(endDate);
+            let count = 0;
+
+            // Clear fields and notify user if end date is before start date.
+            if (startDate > endDate) {
+
+                $('#RequestedLeaveStartDate').val(null)
+                $('#RequestedLeaveEndDate').val(null)
+                $('#HalfDayIdentificationDiv').hide();
+                $('#HalfDayIdentifierOptions').val('N/A');
+                count = 0;
+                alert('The start date must be before the end date. Please make another selection.');
+            } else {
+                const curDate = new Date(startDate.getTime());
+                while (curDate <= endDate) {
+                    const dayOfWeek = curDate.getDay();
+                    if (dayOfWeek !== 0 && dayOfWeek !== 6) count++;
+                    curDate.setDate(curDate.getDate() + 1);
+                }
+
+                if (count == 1) {
+                    $('#HalfDayIdentificationDiv').show();
+                } else {
+                    $('#HalfDayIdentificationDiv').hide();
+                    $('#HalfDayIdentifierOptions').val('-1');
+                }
+            }
+            $('#HiddenTotalDaysRequested').val(count);
+            return count;
+        }
+</script>
+

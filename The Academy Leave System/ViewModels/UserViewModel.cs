@@ -37,5 +37,14 @@ namespace The_Academy_Leave_System.ViewModels
 
 
 
+
+        public decimal LeaveLeftThisYear { get; set; }
+        public decimal LeaveLeftNextYear { get; set; }
+        public decimal LeaveAwaitingApprovalThisYear { get; set; }
+        public decimal LeaveAwaitingApprovalNextYear { get; set; }
+        public decimal LeaveBookedThisYear { get; set; }
+        public decimal LeaveBookedNextYear { get; set; }
+
+
     }
 }

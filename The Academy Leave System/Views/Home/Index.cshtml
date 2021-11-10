@@ -6,18 +6,21 @@
 
 <div class="text-center">
     <h1 class="display-4">@CurrentUser.FirstName @CurrentUser.LastName</h1>
-    <hr/>
+    <hr />
 
 
 
-
-    <h3>Leave Allowance This Year: @Model.ThisUser.LeaveAllowanceThisYear Days</h3>
-    <h3>Days Booked This Year: </h3>
-    <h3>Days Left This Year:</h3>
-    <hr/>
-    <h3>Leave Allowance Next Year: @Model.ThisUser.LeaveAllowanceNextYear Days</h3>
-    <h3>Days Booked Next Year: </h3>
-    <h3>Days Left Next Year:</h3>
+    <h3>This Year @DateTime.Now.Year</h3>
+    <h4>Leave Allowance: @Model.ThisUser.LeaveAllowanceThisYear Days</h4>
+    <h4>Days Booked: @Model.</h4>
+    <h4>Days Awaiting Approval: </h4>
+    <h4>Days Left:</h4>
+    <hr />
+    <h3>Next Year @DateTime.Now.AddYears(1).Year</h3>
+    <h4>Leave Allowance: @Model.ThisUser.LeaveAllowanceNextYear Days</h4>
+    <h4>Days Booked: </h4>
+    <h4>Days Awaiting Approval: </h4>
+    <h4>Days Left:</h4>
 
 
 

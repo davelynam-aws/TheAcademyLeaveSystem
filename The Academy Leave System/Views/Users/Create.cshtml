@@ -4,9 +4,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Create New User</h1>
 
-<h4>User</h4>
+@*<h4>User</h4>*@
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -41,7 +41,7 @@
             <div class="form-group">
                 <label asp-for="ThisUser.TeamId"></label>
                 <select asp-for="ThisUser.TeamId" class="form-control" asp-items="Model.TeamOptions">
-                    @*<option value="" selected disabled>-- Select a Team --</option>*@
+                    <option value="-1" selected disabled>-- Select a Team --</option>
                 </select>
                 <span asp-validation-for="ThisUser.TeamId" class="text-danger"></span>
             </div>
@@ -50,7 +50,7 @@
             <div class="form-group">
                 <label asp-for="ThisUser.RoleId"></label>
                 <select asp-for="ThisUser.RoleId" class="form-control" asp-items="Model.RoleOptions">
-                    @*<option value="" selected disabled>-- Select a Team --</option>*@
+                    <option value="-1" selected disabled>-- Select a Role --</option>
                 </select>
                 <span asp-validation-for="ThisUser.RoleId" class="text-danger"></span>
             </div>
