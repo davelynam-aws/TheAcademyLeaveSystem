@@ -44,7 +44,7 @@
             <div id="HalfDayIdentificationDiv" class="form-group" style="display:none">
                 <label asp-for="ThisLeaveRequest.HalfDayIdentification" class="control-label"></label>
                 @*<input id="HalfDayIdentification" asp-for="HalfDayIdentifierOptions" class="form-control" />*@
-                <select asp-for="ThisLeaveRequest.HalfDayIdentification" class="form-control" asp-items="Model.HalfDayIdentifierOptions">
+                <select id="HalfDayIdentifierOptions" asp-for="ThisLeaveRequest.HalfDayIdentification" class="form-control" asp-items="Model.HalfDayIdentifierOptions">
                     <option value="-1" selected disabled>-- Select AM or PM For Half Day --</option>
                 </select>
                 <span asp-validation-for="ThisLeaveRequest.HalfDayIdentification" class="text-danger"></span>
@@ -103,7 +103,7 @@
     // Update total days on hald day selection.
     $('#HalfDayIdentifierOptions').change(function () {
         console.log($('#TotalDaysRequested').val())
-        if ($('#TotalDaysRequested').val() == '1.00') {
+        if ($('#TotalDaysRequested').val() == '1' || $('#TotalDaysRequested').val() == '1.00') {
             if ($('#HalfDayIdentifierOptions').find(':selected').text() == "AM" || $('#HalfDayIdentifierOptions').find(':selected').text() == "PM") {
                 $('#TotalDaysRequested').val('0.5');
                 $('#HiddenTotalDaysRequested').val('0.5');
