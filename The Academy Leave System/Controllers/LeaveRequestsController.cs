@@ -19,7 +19,7 @@ namespace The_Academy_Leave_System.Controllers
             _context = context;
         }
 
-        // GET: LeaveRequests
+        // GET: LeaveRequests for a user
         public async Task<IActionResult> Index()
         {
             //if (id == null)
@@ -79,6 +79,56 @@ namespace The_Academy_Leave_System.Controllers
 
             return View(leaveRequestViewModels);
         }
+
+        // GET: Get Leave Requests for the supervisor's users.
+        public async Task<IActionResult> SupervisorIndex()
+        {
+            // Validate user access.
+            if (CurrentUser.Role != "Supervisor")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Create new list of request view models.
+            List<LeaveRequestViewModel> leaveRequestViewModels = new List<LeaveRequestViewModel>();
+            LeaveRequestViewModel leaveRequestViewModel;
+
+            // Default null date.
+            DateTime defaultDateTime = DateTime.Parse("01/01/1753");
+
+            // Get the team ID for this supervisor.
+            int myTeamId = await _context.Users.Where(u => u.Id == CurrentUser.Id).Select(u => u.TeamId).SingleOrDefaultAsync();
+
+            // Get all users with the supervisors team id, excluding the current supervisor.
+            var myUsers = await _context.Users.Where(u => u.TeamId == myTeamId && u.Id != CurrentUser.Id).ToListAsync();
+
+            // If the supervisor is responsible for users, loop through them.
+            if(myUsers.Count > 0)
+            {
+                foreach(User u in myUsers)
+                {
+                    // Get all pending leave requests for each user.
+                    var userLeaveRequests = await _context.LeaveRequests.Where(lr => lr.UserId == u.Id && lr.ApprovedDateTime == defaultDateTime && lr.RejectedDateTime == defaultDateTime && lr.IsCancelled == false).ToListAsync();
+
+                    // If this user has requests then create a view model entry for them to be displayed.
+                    if (userLeaveRequests.Count > 0)
+                    {
+                        foreach(LeaveRequest lr in userLeaveRequests)
+                        {
+                            leaveRequestViewModel = new LeaveRequestViewModel();
+                            leaveRequestViewModel.FullName = $"{u.FirstName} {u.LastName}";
+                            leaveRequestViewModel.ThisLeaveRequest = lr;
+                            leaveRequestViewModels.Add(leaveRequestViewModel);
+                        }
+                    }              
+                }
+            }
+
+
+            return View(leaveRequestViewModels);
+        }
+
+
 
         // GET: LeaveRequests/Details/5
         public async Task<IActionResult> Details(int? id)

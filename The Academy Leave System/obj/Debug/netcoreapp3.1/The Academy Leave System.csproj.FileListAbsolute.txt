@@ -445,3 +445,4 @@ C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\o
 C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\LeaveRequests\Details.cshtml.g.cs
 C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\LeaveRequests\Edit.cshtml.g.cs
 C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\LeaveRequests\Index.cshtml.g.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\LeaveRequests\SupervisorIndex.cshtml.g.cs

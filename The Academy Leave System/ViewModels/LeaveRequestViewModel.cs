@@ -23,6 +23,10 @@ namespace The_Academy_Leave_System.ViewModels
         
         public string Status { get; set; }
 
+        public string FullName { get; set; }
+
+
+
 
     }
 }

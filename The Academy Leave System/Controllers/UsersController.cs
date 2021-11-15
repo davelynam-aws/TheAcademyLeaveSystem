@@ -33,7 +33,10 @@ namespace The_Academy_Leave_System.Controllers
             return View(await _context.Users.OrderBy(u => u.FirstName).ToListAsync());
         }
 
-      
+
+
+
+
 
         // GET: Users/Create
         public IActionResult Create()

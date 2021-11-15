@@ -32,6 +32,8 @@ namespace The_Academy_Leave_System.Methods
             CurrentUser.FirstName = null;
             CurrentUser.LastName = null;
             CurrentUser.Id = 0;
+            CurrentUser.RoleId = 0;
+            CurrentUser.Role = "";
         }
 
 
