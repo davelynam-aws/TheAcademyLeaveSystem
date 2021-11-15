@@ -53,7 +53,15 @@
             </td>
 
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ThisLeaveRequest.Id">Edit Leave</a> 
+                @if (item.Status == "Pending")
+                {
+                    <a asp-action="Edit" asp-route-id="@item.ThisLeaveRequest.Id">Edit Leave</a>
+                }
+                else
+                {
+                    @*<a asp-action="Edit" asp-route-id="@item.ThisLeaveRequest.Id">Edit Leave</a>*@
+                }
+
             </td>
         </tr>
 }

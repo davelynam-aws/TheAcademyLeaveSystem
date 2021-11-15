@@ -91,7 +91,6 @@
 
     // Update total days on hald day selection.
     $('#HalfDayIdentifierOptions').change(function () {
-        console.log($('#TotalDaysRequested').val())
         if ($('#TotalDaysRequested').val() == '1' || $('#TotalDaysRequested').val() == '1.00') {
             if ($('#HalfDayIdentifierOptions').find(':selected').text() == "AM" || $('#HalfDayIdentifierOptions').find(':selected').text() == "PM") {
                 $('#TotalDaysRequested').val('0.5');
