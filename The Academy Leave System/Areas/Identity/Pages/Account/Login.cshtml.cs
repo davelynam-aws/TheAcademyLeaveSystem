@@ -28,18 +28,21 @@ namespace The_Academy_Leave_System.Areas.Identity.Pages.Account
         // Register db context for TALS database.
         private readonly DBContext _db;
         private User _currentUser;
+        private User _globalClashes;
 
         public LoginModel(SignInManager<TALSIdentity> signInManager, 
             ILogger<LoginModel> logger,
             UserManager<TALSIdentity> userManager,
             DBContext dBContext,
-            User currentUser)
+            User currentUser,
+            User globalClashes)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _db = dBContext;
             _currentUser = currentUser;
+            _globalClashes = globalClashes;
         }
 
         [BindProperty]

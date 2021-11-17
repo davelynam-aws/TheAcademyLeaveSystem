@@ -1,7 +1,43 @@
 ﻿@model IEnumerable<The_Academy_Leave_System.ViewModels.LeaveRequestViewModel>
+@using The_Academy_Leave_System.ViewModels
 
 @{
     ViewData["Title"] = "Index";
+
+    if (ViewBag.Clashes != null)
+    {
+        string displayMessage;
+
+        foreach (LeaveRequestViewModel lr in ViewBag.Clashes)
+        {
+
+            displayMessage = $"Leave Clash: {lr.FullName} has requested {Convert.ToDateTime(lr.ThisLeaveRequest.RequestedLeaveStartDate).ToShortDateString()} to {Convert.ToDateTime(lr.ThisLeaveRequest.RequestedLeaveEndDate).ToShortDateString()}";
+
+            <script>
+                alert('@displayMessage');
+            </script>
+        }
+    }
+
+
+    @*if (ViewBag.Clashes != null)
+    {
+        if (ViewBag.Clashes.Count > 0)
+        {
+            string displayMessage = "";
+
+            foreach (LeaveRequestViewModel lr in ViewBag.Clashes)
+            {
+                displayMessage = $"Leave Clash: {lr.FullName} has requested {Convert.ToDateTime(lr.ThisLeaveRequest.RequestedLeaveStartDate).ToShortDateString()} to {Convert.ToDateTime(lr.ThisLeaveRequest.RequestedLeaveEndDate).ToShortDateString()}";
+
+                <script>
+                alert('@displayMessage');
+                </script>
+            }
+        }
+    }*@
+
+
 }
 
 <h1>My Annual Leave</h1>
@@ -33,37 +69,38 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
+        @foreach (var item in Model)
+        {
+            <tr>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.ThisLeaveRequest.CreatedDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThisLeaveRequest.RequestedLeaveStartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThisLeaveRequest.RequestedLeaveEndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThisLeaveRequest.TotalDaysRequested)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ThisLeaveRequest.CreatedDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ThisLeaveRequest.RequestedLeaveStartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ThisLeaveRequest.RequestedLeaveEndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ThisLeaveRequest.TotalDaysRequested)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
 
-            <td>
-                @if (item.Status == "Pending")
-                {
-                    <a asp-action="Edit" asp-route-id="@item.ThisLeaveRequest.Id">Edit Leave</a>
-                }
-                else
-                {
-                    @*<a asp-action="Edit" asp-route-id="@item.ThisLeaveRequest.Id">Edit Leave</a>*@
-                }
+                <td>
+                    @if (item.Status == "Pending")
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.ThisLeaveRequest.Id">Edit Leave</a>
+                    }
+                    else
+                    {
+                        @*<a asp-action="Edit" asp-route-id="@item.ThisLeaveRequest.Id">Edit Leave</a>*@
+                    }
 
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -57,6 +57,97 @@ namespace The_Academy_Leave_System.Controllers
 
             userViewModel.LeaveLeftNextYear = userViewModel.ThisUser.LeaveAllowanceNextYear - userViewModel.LeaveBookedNextYear - userViewModel.LeaveAwaitingApprovalNextYear;
 
+
+
+            // Get all unseen leave request notifications and send to the view to be displayed by the designer as a notification.
+
+            List<LeaveRequest> leaveRequestNotifications = new List<LeaveRequest>();
+
+            List<string> notificationMessage = new List<string>();
+            // Get this user's notifications
+            leaveRequestNotifications = _context.LeaveRequests.Where(lr => lr.UserId == CurrentUser.Id && lr.UserNotified == false && (lr.ApprovedDateTime > nullDateTime || lr.ApprovedDateTime > nullDateTime)).ToList();
+
+            if (leaveRequestNotifications.Count > 0)
+            {
+                foreach(LeaveRequest lr in leaveRequestNotifications)
+                {
+                    if (lr.ApprovedDateTime > nullDateTime)
+                    {
+                        notificationMessage.Add($"Leave denied for {Convert.ToDateTime(lr.RequestedLeaveStartDate).ToShortDateString()} to {Convert.ToDateTime(lr.RequestedLeaveEndDate).ToShortDateString()}");
+                    }
+                    else
+                    {
+                        notificationMessage.Add($"Leave denied for {Convert.ToDateTime(lr.RequestedLeaveStartDate).ToShortDateString()} to {Convert.ToDateTime(lr.RequestedLeaveEndDate).ToShortDateString()}");
+                    }
+
+                    // Update the leave request so the user is only notified once.
+                    lr.UserNotified = true;
+                    _context.Update(lr);
+                    _context.SaveChangesAsync();
+
+                }
+            }
+
+
+            if(CurrentUser.Role == "Supervisor")
+            {
+                List<User> teamUsers = new List<User>();
+                teamUsers = _context.Users.Where(u => u.TeamId == userViewModel.ThisUser.TeamId && u.Id != CurrentUser.Id).ToList();
+
+                if (teamUsers.Count > 0)
+                {
+                    foreach(User u in teamUsers)
+                    {
+
+                        leaveRequestNotifications = _context.LeaveRequests.Where(lr => lr.UserId == u.Id && lr.ManagerNotified == false).ToList();
+
+                        if (leaveRequestNotifications.Count > 0)
+                        {
+                            foreach (LeaveRequest lr in leaveRequestNotifications)
+                            {
+
+                                notificationMessage.Add($"Leave requested by {u.FirstName} {u.LastName} from {Convert.ToDateTime(lr.RequestedLeaveStartDate).ToShortDateString()} to {Convert.ToDateTime(lr.RequestedLeaveEndDate).ToShortDateString()}");
+                                
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            if (CurrentUser.Role == "Manager")
+            {
+                List<User> supervisorUsers = new List<User>();
+
+                int supervisorRoleId = _context.Roles.Where(r => r.RoleName == "Supervisor").Select(r => r.Id).Single();
+
+                supervisorUsers = _context.Users.Where(u => u.RoleId == supervisorRoleId).ToList();
+
+                if (supervisorUsers.Count > 0)
+                {
+                    foreach (User u in supervisorUsers)
+                    {
+
+                        leaveRequestNotifications = _context.LeaveRequests.Where(lr => lr.UserId == u.Id && lr.ManagerNotified == false).ToList();
+
+                        if (leaveRequestNotifications.Count > 0)
+                        {
+                            foreach (LeaveRequest lr in leaveRequestNotifications)
+                            {
+
+                                notificationMessage.Add($"Leave requested by {u.FirstName} {u.LastName} from {Convert.ToDateTime(lr.RequestedLeaveStartDate).ToShortDateString()} to {Convert.ToDateTime(lr.RequestedLeaveEndDate).ToShortDateString()}");
+
+                            }
+                        }
+                    }
+                }
+
+            }
+
+
+            ViewBag.NotificationMessage = notificationMessage;
+
+
             return View(userViewModel);
         }
 

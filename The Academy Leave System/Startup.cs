@@ -39,6 +39,7 @@ namespace The_Academy_Leave_System
             services.AddDbContext<DBContext>(options =>
                 options.UseSqlServer(conn));  //use conn
 
+            // Global variable for tracking the current user.
             Action<User> currentUser = (opt =>
             {
 
@@ -46,7 +47,18 @@ namespace The_Academy_Leave_System
 
             services.Configure(currentUser);
             services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<User>>().Value);
-    
+
+
+
+            // Global variable for tracking the current user.
+            Action<User> globalClashes = (opt =>
+            {
+
+            });
+
+            services.Configure(globalClashes);
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<User>>().Value);
+
 
             // This service allows us to step through razor pages when live debugging in the browser.
             services.AddControllersWithViews().AddRazorRuntimeCompilation();

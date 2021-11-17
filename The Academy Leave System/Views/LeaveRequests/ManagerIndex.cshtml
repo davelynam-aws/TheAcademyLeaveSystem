@@ -55,8 +55,8 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
 
-                <input type="button" value="Approve" class="btn btn-primary" onclick="location.href='@Url.Action("SupervisorApproveLeave", "LeaveRequests")?id=' + @item.ThisLeaveRequest.Id" />
-                <input type="button" value="Deny" class="btn btn-danger" onclick="location.href='@Url.Action("SupervisorDenyLeave", "LeaveRequests")?id=' + @item.ThisLeaveRequest.Id" />
+                <input type="button" value="Approve" class="btn btn-primary" onclick="location.href='@Url.Action("ManagerApproveLeave", "LeaveRequests")?id=' + @item.ThisLeaveRequest.Id" />
+                <input type="button" value="Deny" class="btn btn-danger" onclick="location.href='@Url.Action("ManagerDenyLeave", "LeaveRequests")?id=' + @item.ThisLeaveRequest.Id" />
             </td>
 
 

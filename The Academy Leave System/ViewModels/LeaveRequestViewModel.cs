@@ -12,6 +12,8 @@ namespace The_Academy_Leave_System.ViewModels
     {
         public LeaveRequest ThisLeaveRequest { get; set; }
 
+        public User ThisUser { get; set; }
+
         [Display(Name = "AM/PM")]
         public List<SelectListItem> HalfDayIdentifierOptions = new List<SelectListItem>()
         {          

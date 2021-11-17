@@ -77,6 +77,27 @@ namespace The_Academy_Leave_System.Controllers
             }
 
 
+            //List<LeaveRequestViewModel> Clashes = new List<LeaveRequestViewModel>();
+
+            //if(ViewData["Clashes"] != null)
+            //{
+            //    foreach (var item in ViewData["Clashes"] as IEnumerable<LeaveRequestViewModel>)
+            //    {
+            //        Clashes.Add(item);
+            //    }
+
+            //    ViewBag.Clashes = Clashes;
+
+
+            //}
+
+            // Send clashes to the view.
+            if (GlobalClashes.Clashes.Count > 0)
+            {
+                ViewBag.Clashes = GlobalClashes.Clashes;
+            }
+
+
             return View(leaveRequestViewModels);
         }
 
@@ -128,6 +149,210 @@ namespace The_Academy_Leave_System.Controllers
             return View(leaveRequestViewModels);
         }
 
+        // Approve a leave request id
+        public async Task<IActionResult> SupervisorApproveLeave(int? id)
+        {
+            // Validate user access.
+            if (CurrentUser.Role != "Supervisor")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var leaveRequest = await _context.LeaveRequests.Where(lr => lr.Id == id).SingleOrDefaultAsync();
+
+            if (leaveRequest != null)
+            {
+                leaveRequest.ApprovedDateTime = DateTime.Now;
+                leaveRequest.ManagerNotified = true;
+
+                try
+                {
+                    _context.Update(leaveRequest);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!LeaveRequestExists(leaveRequest.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(SupervisorIndex));
+            }
+
+            return View();
+        }
+
+
+        // Deny a leave request id
+        public async Task<IActionResult> SupervisorDenyLeave(int? id)
+        {
+            // Validate user access.
+            if (CurrentUser.Role != "Supervisor")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var leaveRequest = await _context.LeaveRequests.Where(lr => lr.Id == id).SingleOrDefaultAsync();
+
+            if (leaveRequest != null)
+            {
+                leaveRequest.RejectedDateTime = DateTime.Now;
+                leaveRequest.ManagerNotified = true;
+
+                try
+                {
+                    _context.Update(leaveRequest);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!LeaveRequestExists(leaveRequest.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(SupervisorIndex));
+            }
+
+            return View();
+        }
+
+
+        // GET: Get Leave Requests for the Manager's users.
+        public async Task<IActionResult> ManagerIndex()
+        {
+            // Validate user access.
+            if (CurrentUser.Role != "Manager")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Create new list of request view models.
+            List<LeaveRequestViewModel> leaveRequestViewModels = new List<LeaveRequestViewModel>();
+            LeaveRequestViewModel leaveRequestViewModel;
+
+            // Default null date.
+            DateTime defaultDateTime = DateTime.Parse("01/01/1753");
+
+            int supervisorRoleId = _context.Roles.Where(r => r.RoleName == "Supervisor").Select(r => r.Id).Single();
+
+            // Get the team ID for this Manager.
+            //int myTeamId = await _context.Users.Where(u => u.Id == CurrentUser.Id).Select(u => u.TeamId).SingleOrDefaultAsync();
+
+            // Get all supervisors with the manager's team id, excluding the current manager.
+            var myUsers = await _context.Users.Where(u => /*u.TeamId == myTeamId &&*/ u.Id != CurrentUser.Id && u.RoleId == supervisorRoleId).ToListAsync();
+
+            // If the manager is responsible for supervisors, loop through them.
+            if (myUsers.Count > 0)
+            {
+                foreach (User u in myUsers)
+                {
+                    // Get all pending leave requests for each user.
+                    var userLeaveRequests = await _context.LeaveRequests.Where(lr => lr.UserId == u.Id && lr.ApprovedDateTime == defaultDateTime && lr.RejectedDateTime == defaultDateTime && lr.IsCancelled == false).ToListAsync();
+
+                    // If this user has requests then create a view model entry for them to be displayed.
+                    if (userLeaveRequests.Count > 0)
+                    {
+                        foreach (LeaveRequest lr in userLeaveRequests)
+                        {
+                            leaveRequestViewModel = new LeaveRequestViewModel();
+                            leaveRequestViewModel.FullName = $"{u.FirstName} {u.LastName}";
+                            leaveRequestViewModel.ThisLeaveRequest = lr;
+                            leaveRequestViewModels.Add(leaveRequestViewModel);
+                        }
+                    }
+                }
+            }
+
+
+            return View(leaveRequestViewModels);
+        }
+
+
+        // Approve a leave request id
+        public async Task<IActionResult> ManagerApproveLeave(int? id)
+        {
+            // Validate user access.
+            if (CurrentUser.Role != "Manager")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var leaveRequest = await _context.LeaveRequests.Where(lr => lr.Id == id).SingleOrDefaultAsync();
+
+            if (leaveRequest != null)
+            {
+                leaveRequest.ApprovedDateTime = DateTime.Now;
+                leaveRequest.ManagerNotified = true;
+
+                try
+                {
+                    _context.Update(leaveRequest);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!LeaveRequestExists(leaveRequest.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(SupervisorIndex));
+            }
+
+            return View();
+        }
+
+
+        // Deny a leave request id
+        public async Task<IActionResult> ManagerDenyLeave(int? id)
+        {
+            // Validate user access.
+            if (CurrentUser.Role != "Manager")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var leaveRequest = await _context.LeaveRequests.Where(lr => lr.Id == id).SingleOrDefaultAsync();
+
+            if (leaveRequest != null)
+            {
+                leaveRequest.RejectedDateTime = DateTime.Now;
+                leaveRequest.ManagerNotified = true;
+                try
+                {
+                    _context.Update(leaveRequest);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!LeaveRequestExists(leaveRequest.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(SupervisorIndex));
+            }
+
+            return View();
+        }
 
 
         // GET: LeaveRequests/Details/5
@@ -190,6 +415,13 @@ namespace The_Academy_Leave_System.Controllers
                         leaveRequestViewModel.ThisLeaveRequest.HalfDayIdentification = leaveRequestViewModel.ThisLeaveRequest.HalfDayIdentification.Replace("/", "");
                     }
                 }
+
+                // Get any leave clashes.
+                List<LeaveRequestViewModel> clashes = CheckForLeaveClashes(leaveRequestViewModel);
+
+
+                // Set as global variable so it can be accessed by the view.
+                GlobalClashes.Clashes = clashes;
 
                 _context.Add(leaveRequestViewModel.ThisLeaveRequest);
                 await _context.SaveChangesAsync();
@@ -306,5 +538,75 @@ namespace The_Academy_Leave_System.Controllers
         {
             return _context.LeaveRequests.Any(e => e.Id == id);
         }
+
+
+
+        public List<LeaveRequestViewModel> CheckForLeaveClashes(LeaveRequestViewModel leaveRequestViewModel)
+        {
+            List<LeaveRequestViewModel> leaveClashesViewModels = new List<LeaveRequestViewModel>();
+            LeaveRequestViewModel leaveRequestViewModelLocal;
+           List<int> addedRequests = new List<int>();
+
+            DateTime nullDateDefault = DateTime.Parse("01/01/1753");
+
+            // Gets clashes where start date is between clash dates.
+            List<LeaveRequest> leaveRequestClashes =  _context.LeaveRequests.Where(lr => leaveRequestViewModel.ThisLeaveRequest.RequestedLeaveStartDate >= lr.RequestedLeaveStartDate && leaveRequestViewModel.ThisLeaveRequest.RequestedLeaveStartDate <= lr.RequestedLeaveEndDate && lr.IsCancelled != true && lr.RejectedDateTime == nullDateDefault).ToList();
+
+
+            // Get clashes where end date is between clash dates.
+            List<LeaveRequest> leaveRequestClashesAdditional =  _context.LeaveRequests.Where(lr => leaveRequestViewModel.ThisLeaveRequest.RequestedLeaveEndDate >= lr.RequestedLeaveStartDate && leaveRequestViewModel.ThisLeaveRequest.RequestedLeaveEndDate <= lr.RequestedLeaveEndDate && lr.IsCancelled != true && lr.RejectedDateTime == nullDateDefault).ToList();
+
+
+            if(leaveRequestClashes.Count > 0)
+            {
+   
+               foreach(LeaveRequest lrc in leaveRequestClashes)
+                {
+                    // Add the clash to the master list if has not already been added.
+                    if (!addedRequests.Contains(lrc.Id))
+                    {
+                        leaveRequestViewModelLocal = new LeaveRequestViewModel();
+                        leaveRequestViewModelLocal.ThisLeaveRequest = lrc;
+                        leaveRequestViewModelLocal.ThisUser = _context.Users.Where(u => u.Id == lrc.UserId).Single();
+                        leaveRequestViewModelLocal.FullName = $"{leaveRequestViewModelLocal.ThisUser.FirstName} {leaveRequestViewModelLocal.ThisUser.LastName}";
+                        leaveClashesViewModels.Add(leaveRequestViewModelLocal);
+                        addedRequests.Add(lrc.Id);
+                    }
+
+                }
+            }
+
+            if (leaveRequestClashesAdditional.Count > 0)
+            {
+                foreach (LeaveRequest lrc in leaveRequestClashesAdditional)
+                {
+                    // Add the clash to the master list if has not already been added.
+                    if (!addedRequests.Contains(lrc.Id))
+                    {
+                        leaveRequestViewModelLocal = new LeaveRequestViewModel();
+                        leaveRequestViewModelLocal.ThisLeaveRequest = lrc;
+                        leaveRequestViewModelLocal.ThisUser = _context.Users.Where(u => u.Id == lrc.UserId).Single();
+                        leaveRequestViewModelLocal.FullName = $"{leaveRequestViewModelLocal.ThisUser.FirstName} {leaveRequestViewModelLocal.ThisUser.LastName}";
+                        leaveClashesViewModels.Add(leaveRequestViewModelLocal);
+                        addedRequests.Add(lrc.Id);
+                    }
+
+                }
+            }
+
+
+            // Return a list of clashes to display to the user.
+
+
+
+            return leaveClashesViewModels;
+        }
+
+
+
+
+
+
+
     }
 }

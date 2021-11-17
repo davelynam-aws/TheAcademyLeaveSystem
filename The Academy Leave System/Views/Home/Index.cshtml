@@ -2,6 +2,18 @@
 
 @{
     ViewData["Title"] = "Home Page";
+
+    if (ViewBag.NotificationMessage.Count > 0)
+    {
+        foreach (string notification in ViewBag.NotificationMessage)
+        {
+            <script>
+                alert('@notification');
+            </script>
+        }
+
+    }
+
 }
 
 <div class="text-center">
