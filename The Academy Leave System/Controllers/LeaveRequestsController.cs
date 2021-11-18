@@ -385,7 +385,7 @@ namespace The_Academy_Leave_System.Controllers
         }
 
 
-        public async Task<IActionResult> EmployeeDataReport(int? id)
+        public async Task<IActionResult> EmployeeDataReport(LeaveRequestViewModel leaveRequestViewModel)
         {
             // Validate user access.
             if (CurrentUser.Role != "Manager")

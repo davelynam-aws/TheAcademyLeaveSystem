@@ -11,7 +11,10 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ThisLeaveRequest.Id" />
 
-      
+
+            @Html.HiddenFor(m => m.SelectedUserId)
+
+
             <div id="UserDiv" class="form-group">
                 <label asp-for="SelectedUserId" class="control-label"></label>
                 @*<input id="HalfDayIdentification" asp-for="HalfDayIdentifierOptions" class="form-control" />*@
@@ -21,14 +24,12 @@
                 <span asp-validation-for="SelectedUserId" class="text-danger"></span>
             </div>
 
-
-            <div class="form-group">
-                <input type="button" value="Cancel This Request" class="btn btn-primary" asp-action="EmployeeDataReport" asp-controller="LeaveRequests" onclick="location.href='@Url.Action("EmployeeDataReport", "LeaveRequests")?id=' + @Model.SelectedUserId" />
-            </div>
             <hr />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Show All Leave Requests" class="btn btn-primary" asp-action="EmployeeDataReport" asp-controller="LeaveRequests" />
             </div>
+
+
         </form>
     </div>
 </div>
