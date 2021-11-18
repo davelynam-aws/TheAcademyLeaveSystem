@@ -1,0 +1,34 @@
+﻿@model The_Academy_Leave_System.ViewModels.LeaveRequestViewModel
+
+
+<h1>Edit This Request</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ThisLeaveRequest.Id" />
+
+      
+            <div id="UserDiv" class="form-group">
+                <label asp-for="SelectedUserId" class="control-label"></label>
+                @*<input id="HalfDayIdentification" asp-for="HalfDayIdentifierOptions" class="form-control" />*@
+                <select id="User" asp-for="SelectedUserId" class="form-control" asp-items="Model.Users">
+                    <option value="-1" selected disabled>-- Select A User --</option>
+                </select>
+                <span asp-validation-for="SelectedUserId" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="button" value="Cancel This Request" class="btn btn-primary" asp-action="EmployeeDataReport" asp-controller="LeaveRequests" onclick="location.href='@Url.Action("EmployeeDataReport", "LeaveRequests")?id=' + @Model.SelectedUserId" />
+            </div>
+            <hr />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

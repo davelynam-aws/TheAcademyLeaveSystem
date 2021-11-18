@@ -27,8 +27,9 @@ namespace The_Academy_Leave_System.ViewModels
 
         public string FullName { get; set; }
 
+        public List<SelectListItem> Users { get; set; } = new List<SelectListItem>();
 
-
+        public int SelectedUserId { get; set; }
 
     }
 }

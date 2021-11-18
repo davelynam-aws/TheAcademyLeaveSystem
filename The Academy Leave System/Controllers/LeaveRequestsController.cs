@@ -354,6 +354,51 @@ namespace The_Academy_Leave_System.Controllers
             return View();
         }
 
+        public async Task<IActionResult> EmployeeDataIndex()
+        {
+            // Validate user access.
+            if (CurrentUser.Role != "Manager")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            LeaveRequestViewModel leaveRequestViewModel = new LeaveRequestViewModel();
+
+            // Create an empty select list to convert role list.
+            List<User> userList = await _context.Users.ToListAsync();
+
+            // Add first entry to role select list that cannot be selected.
+            // roleList.Add(new SelectListItem { Selected = true, Disabled = true, Value = "-1", Text = "-- Select a Role --" });
+
+            // Populate select list with roles.
+            foreach (User user in userList)
+            {
+                leaveRequestViewModel.Users.Add(new SelectListItem
+                {
+                    Value = user.Id.ToString(),
+                    Text = $"{user.FirstName} {user.LastName}"
+                });
+            }
+
+
+            return View(leaveRequestViewModel);
+        }
+
+
+        public async Task<IActionResult> EmployeeDataReport(int? id)
+        {
+            // Validate user access.
+            if (CurrentUser.Role != "Manager")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
+
+            return View();
+        }
+
+
 
         // GET: LeaveRequests/Details/5
         public async Task<IActionResult> Details(int? id)
