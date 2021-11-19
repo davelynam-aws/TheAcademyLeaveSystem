@@ -16,13 +16,13 @@ namespace The_Academy_Leave_System.ViewModels
 
         [Display(Name = "AM/PM")]
         public List<SelectListItem> HalfDayIdentifierOptions = new List<SelectListItem>()
-        {          
+        {
             new SelectListItem() { Text="AM", Value="AM"},
             new SelectListItem() { Text="PM", Value="PM"},
             new SelectListItem() { Text="N/A", Value="N/A"},
         };
 
-        
+
         public string Status { get; set; }
 
         public string FullName { get; set; }
@@ -30,6 +30,8 @@ namespace The_Academy_Leave_System.ViewModels
         public List<SelectListItem> Users { get; set; } = new List<SelectListItem>();
 
         public int SelectedUserId { get; set; }
+
+        public List<LeaveRequest> ThisUserLeaveRequests { get; set; } = new List<LeaveRequest>();
 
     }
 }

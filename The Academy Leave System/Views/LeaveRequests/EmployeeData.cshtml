@@ -1,0 +1,74 @@
+﻿@model The_Academy_Leave_System.ViewModels.LeaveRequestViewModel
+@using The_Academy_Leave_System.ViewModels
+
+@{
+    ViewData["Title"] = "Index";
+
+
+}
+
+<h1>@Model.ThisUser.FirstName @Model.ThisUser.LastName Leave Report</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ThisLeaveRequest.CreatedDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThisLeaveRequest.RequestedLeaveStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThisLeaveRequest.RequestedLeaveEndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThisLeaveRequest.TotalDaysRequested)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ThisLeaveRequest.ApprovedDateTime)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ThisLeaveRequest.RejectedDateTime)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ThisLeaveRequest.IsCancelled)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ThisUserLeaveRequests)
+        {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestedLeaveStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestedLeaveEndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalDaysRequested)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApprovedDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RejectedDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCancelled)
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>

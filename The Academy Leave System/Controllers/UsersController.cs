@@ -23,8 +23,20 @@ namespace The_Academy_Leave_System.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             // Redirect to home if user is not authorised.
-            if(CurrentUser.Role != "Administrator")
+            if (CurrentUser.Role != "Administrator")
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -42,6 +54,18 @@ namespace The_Academy_Leave_System.Controllers
         public IActionResult Create()
 
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             // Redirect to home if user is not authorised.
             if (CurrentUser.Role != "Administrator")
             {
@@ -95,20 +119,27 @@ namespace The_Academy_Leave_System.Controllers
             // Assign team list to userviewmodel list.
             userViewModel.TeamOptions = teamList;
 
-
-
-
             return View(userViewModel);
         }
 
         // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(UserViewModel userViewModel)
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             // Redirect to home if user is not authorised.
             if (CurrentUser.Role != "Administrator")
             {
@@ -129,10 +160,6 @@ namespace The_Academy_Leave_System.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
 
-
-                //_context.Add(user);
-                //await _context.SaveChangesAsync();
-                //return RedirectToAction(nameof(Index));
             }
 
             // Return with validation message if model is invalid.
@@ -143,23 +170,38 @@ namespace The_Academy_Leave_System.Controllers
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             // Redirect to home if user is not authorised.
             if (CurrentUser.Role != "Administrator")
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            // Return if no user id is found.
             if (id == null)
             {
                 return NotFound();
             }
 
+            // Get user from id.
             var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
+            // Create view model.
             UserViewModel userViewModel = new UserViewModel();
             userViewModel.ThisUser = user;
 
@@ -185,16 +227,16 @@ namespace The_Academy_Leave_System.Controllers
             // Assign role list to userviewmodel list.
             userViewModel.RoleOptions = roleList;
 
-            // Get role options
+            // Get team options
             List<Team> teams = _context.Teams.ToList();
 
-            // Create an empty select list to convert role list.
+            // Create an empty select list to convert team list.
             List<SelectListItem> teamList = new List<SelectListItem>();
 
-            // Add first entry to role select list that cannot be selected.
+            // Add first entry to team select list that cannot be selected.
             teamList.Add(new SelectListItem { Selected = true, Disabled = true, Value = "-1", Text = "-- Select a Team --" });
 
-            // Populate select list with roles.
+            // Populate select list with teams.
             foreach (Team team in teams)
             {
                 teamList.Add(new SelectListItem
@@ -207,22 +249,34 @@ namespace The_Academy_Leave_System.Controllers
             // Assign team list to userviewmodel list.
             userViewModel.TeamOptions = teamList;
 
+            // Return viewmodel to view.
             return View(userViewModel);
         }
 
         // POST: Users/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, UserViewModel userViewModel)
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             // Redirect to home if user is not authorised.
             if (CurrentUser.Role != "Administrator")
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            // If user being edited is not the one selected then return view.
             if (id != userViewModel.ThisUser.Id)
             {
                 return NotFound();
@@ -234,6 +288,7 @@ namespace The_Academy_Leave_System.Controllers
                 userViewModel.ThisUser.PasswordHash = _context.Users.Where(u => u.Id == id).Select(u => u.PasswordHash).Single();
                 userViewModel.ThisUser.LastLoggedInDateTime = _context.Users.Where(u => u.Id == id).Select(u => u.LastLoggedInDateTime).Single();
 
+                // Update and save to the database.
                 try
                 {
                     _context.Update(userViewModel.ThisUser);
@@ -250,6 +305,7 @@ namespace The_Academy_Leave_System.Controllers
                         throw;
                     }
                 }
+                // Return to the list of users.
                 return RedirectToAction(nameof(Index));
             }
             return View(userViewModel);
@@ -263,6 +319,18 @@ namespace The_Academy_Leave_System.Controllers
         // GET: Users/ResetPassword/5
         public IActionResult ResetPassword(int? id)
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             // Redirect to home if user is not authorised.
             if (CurrentUser.Role != "Administrator")
             {
@@ -274,6 +342,7 @@ namespace The_Academy_Leave_System.Controllers
                 return NotFound();
             }
 
+            // Return reset password view.
             ResetPassword resetPassword = new ResetPassword();
      
             return View(resetPassword);
@@ -284,17 +353,31 @@ namespace The_Academy_Leave_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(int id, ResetPassword resetPassword)
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             // Redirect to home if user is not authorised.
             if (CurrentUser.Role != "Administrator")
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            // If model is valid, update the new password hash.
             if (ModelState.IsValid)
             {
                 User user = _context.Users.Where(u => u.Id == id).Single();
                 user.PasswordHash = SecurePasswordHasher.Hash(resetPassword.Password);
 
+                // Update the database.
                 try
                 {
                     _context.Update(user);

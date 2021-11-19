@@ -12,7 +12,7 @@ using The_Academy_Leave_System.ViewModels;
 
 namespace The_Academy_Leave_System.Controllers
 {
-    //[Authorize]
+ 
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -23,12 +23,20 @@ namespace The_Academy_Leave_System.Controllers
 
         public HomeController(ILogger<HomeController> logger, DBContext dBContext)
         {
+            // Assign db conetext and logger.
             _logger = logger;
             _context = dBContext;
         }
 
         public IActionResult Index()
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Create new viewmodel.
             UserViewModel userViewModel = new UserViewModel();
 
             // If the user is not logged in then always redirect to the login page.
@@ -38,10 +46,12 @@ namespace The_Academy_Leave_System.Controllers
                 return LocalRedirect("/Identity/Account/Login");   
             }
 
-       
+            // Set comparisson dates for identifying this year and next year leave.
             DateTime startOfNextYear = DateTime.Parse($"01/01/{DateTime.Now.AddYears(1).Year}");
             DateTime nullDateTime = DateTime.Parse("01/01/1753");
 
+
+            // This section gets all aggregate leave data for the user.
             userViewModel.ThisUser = _context.Users.Where(u => u.Id == CurrentUser.Id).Single();
             userViewModel.MyLeaveRequests = _context.LeaveRequests.Where(l => l.UserId == CurrentUser.Id).ToList();
 
@@ -60,10 +70,10 @@ namespace The_Academy_Leave_System.Controllers
 
 
             // Get all unseen leave request notifications and send to the view to be displayed by the designer as a notification.
-
             List<LeaveRequest> leaveRequestNotifications = new List<LeaveRequest>();
 
             List<string> notificationMessage = new List<string>();
+
             // Get this user's notifications
             leaveRequestNotifications = _context.LeaveRequests.Where(lr => lr.UserId == CurrentUser.Id && lr.UserNotified == false && (lr.ApprovedDateTime > nullDateTime || lr.ApprovedDateTime > nullDateTime)).ToList();
 
@@ -88,7 +98,7 @@ namespace The_Academy_Leave_System.Controllers
                 }
             }
 
-
+            // If the user is a supervisor then get all pending requests and display as a notification until they are actioned.
             if(CurrentUser.Role == "Supervisor")
             {
                 List<User> teamUsers = new List<User>();
@@ -115,6 +125,8 @@ namespace The_Academy_Leave_System.Controllers
 
             }
 
+
+            // If the user is a manager then get all pending requests and display as a notification until they are actioned.
             if (CurrentUser.Role == "Manager")
             {
                 List<User> supervisorUsers = new List<User>();

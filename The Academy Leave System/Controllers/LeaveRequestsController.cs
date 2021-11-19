@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using The_Academy_Leave_System.Methods;
 using The_Academy_Leave_System.Models;
 using The_Academy_Leave_System.ViewModels;
 
@@ -22,31 +23,34 @@ namespace The_Academy_Leave_System.Controllers
         // GET: LeaveRequests for a user
         public async Task<IActionResult> Index()
         {
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
 
-            //if(id != CurrentUser.Id)
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
 
-            if(CurrentUser.Email == null)
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
             {
                 return LocalRedirect("/Identity/Account/Login");
             }
 
+            // create list of leave request view models.
             List<LeaveRequestViewModel> leaveRequestViewModels = new List<LeaveRequestViewModel>();
 
+            // Get leave requests for this user.
             var leaveRequests = await _context.LeaveRequests.Where(l => l.UserId == CurrentUser.Id).OrderByDescending(l => l.CreatedDateTime).ToListAsync();
 
+            // Generate model data.
             if (leaveRequests != null)
             {
                 foreach(LeaveRequest lr in leaveRequests)
                 {
                     LeaveRequestViewModel lrvm = new LeaveRequestViewModel();
 
+                    // Establish automated status depending on approval status.
                     if(lr.IsCancelled == true)
                     {
                         lrvm.Status = "Cancelled";
@@ -70,28 +74,14 @@ namespace The_Academy_Leave_System.Controllers
 
 
 
-
+                    // Add to list.
                     lrvm.ThisLeaveRequest = lr;
                     leaveRequestViewModels.Add(lrvm);
                 }
             }
 
 
-            //List<LeaveRequestViewModel> Clashes = new List<LeaveRequestViewModel>();
-
-            //if(ViewData["Clashes"] != null)
-            //{
-            //    foreach (var item in ViewData["Clashes"] as IEnumerable<LeaveRequestViewModel>)
-            //    {
-            //        Clashes.Add(item);
-            //    }
-
-            //    ViewBag.Clashes = Clashes;
-
-
-            //}
-
-            // Send clashes to the view.
+            // Send clashes to the view if they exist.
             if (GlobalClashes.Clashes.Count > 0)
             {
                 ViewBag.Clashes = GlobalClashes.Clashes;
@@ -104,6 +94,18 @@ namespace The_Academy_Leave_System.Controllers
         // GET: Get Leave Requests for the supervisor's users.
         public async Task<IActionResult> SupervisorIndex()
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             // Validate user access.
             if (CurrentUser.Role != "Supervisor")
             {
@@ -152,12 +154,26 @@ namespace The_Academy_Leave_System.Controllers
         // Approve a leave request id
         public async Task<IActionResult> SupervisorApproveLeave(int? id)
         {
+
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             // Validate user access.
             if (CurrentUser.Role != "Supervisor")
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            // Get and populate the leave request that is being approved.
             var leaveRequest = await _context.LeaveRequests.Where(lr => lr.Id == id).SingleOrDefaultAsync();
 
             if (leaveRequest != null)
@@ -165,6 +181,7 @@ namespace The_Academy_Leave_System.Controllers
                 leaveRequest.ApprovedDateTime = DateTime.Now;
                 leaveRequest.ManagerNotified = true;
 
+                // Update database.
                 try
                 {
                     _context.Update(leaveRequest);
@@ -191,12 +208,26 @@ namespace The_Academy_Leave_System.Controllers
         // Deny a leave request id
         public async Task<IActionResult> SupervisorDenyLeave(int? id)
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             // Validate user access.
             if (CurrentUser.Role != "Supervisor")
             {
                 return RedirectToAction("Index", "Home");
             }
 
+
+            // Get this leave request.
             var leaveRequest = await _context.LeaveRequests.Where(lr => lr.Id == id).SingleOrDefaultAsync();
 
             if (leaveRequest != null)
@@ -204,6 +235,7 @@ namespace The_Academy_Leave_System.Controllers
                 leaveRequest.RejectedDateTime = DateTime.Now;
                 leaveRequest.ManagerNotified = true;
 
+                // Update database.
                 try
                 {
                     _context.Update(leaveRequest);
@@ -230,6 +262,19 @@ namespace The_Academy_Leave_System.Controllers
         // GET: Get Leave Requests for the Manager's users.
         public async Task<IActionResult> ManagerIndex()
         {
+
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             // Validate user access.
             if (CurrentUser.Role != "Manager")
             {
@@ -281,12 +326,25 @@ namespace The_Academy_Leave_System.Controllers
         // Approve a leave request id
         public async Task<IActionResult> ManagerApproveLeave(int? id)
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             // Validate user access.
             if (CurrentUser.Role != "Manager")
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            // Get leave request.
             var leaveRequest = await _context.LeaveRequests.Where(lr => lr.Id == id).SingleOrDefaultAsync();
 
             if (leaveRequest != null)
@@ -294,6 +352,7 @@ namespace The_Academy_Leave_System.Controllers
                 leaveRequest.ApprovedDateTime = DateTime.Now;
                 leaveRequest.ManagerNotified = true;
 
+                // Update database.
                 try
                 {
                     _context.Update(leaveRequest);
@@ -320,6 +379,18 @@ namespace The_Academy_Leave_System.Controllers
         // Deny a leave request id
         public async Task<IActionResult> ManagerDenyLeave(int? id)
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             // Validate user access.
             if (CurrentUser.Role != "Manager")
             {
@@ -330,8 +401,11 @@ namespace The_Academy_Leave_System.Controllers
 
             if (leaveRequest != null)
             {
+                // Get leave request
                 leaveRequest.RejectedDateTime = DateTime.Now;
                 leaveRequest.ManagerNotified = true;
+                
+                // Update database.
                 try
                 {
                     _context.Update(leaveRequest);
@@ -356,6 +430,18 @@ namespace The_Academy_Leave_System.Controllers
 
         public async Task<IActionResult> EmployeeDataIndex()
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             // Validate user access.
             if (CurrentUser.Role != "Manager")
             {
@@ -387,40 +473,61 @@ namespace The_Academy_Leave_System.Controllers
 
         public async Task<IActionResult> EmployeeDataReport(LeaveRequestViewModel leaveRequestViewModel)
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             // Validate user access.
             if (CurrentUser.Role != "Manager")
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            if (leaveRequestViewModel.SelectedUserId != 0)
+            {
+                // If user has been selected, show reporing data.
+                leaveRequestViewModel.ThisUser = _context.Users.Where(u => u.Id == leaveRequestViewModel.SelectedUserId).Single();
+                leaveRequestViewModel.ThisUserLeaveRequests = await _context.LeaveRequests.Where(lr => lr.UserId == leaveRequestViewModel.SelectedUserId).ToListAsync();
 
 
-            return View();
+
+
+                return View("EmployeeData", leaveRequestViewModel);
+
+            }
+
+
+
+
+            return RedirectToAction("Index", "Home");
         }
 
 
 
-        // GET: LeaveRequests/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var leaveRequest = await _context.LeaveRequests
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (leaveRequest == null)
-            {
-                return NotFound();
-            }
-
-            return View(leaveRequest);
-        }
 
         // GET: LeaveRequests/Create
         public IActionResult Create()
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             LeaveRequestViewModel leaveRequestViewModel = new LeaveRequestViewModel();
             leaveRequestViewModel.ThisLeaveRequest = new LeaveRequest();
             leaveRequestViewModel.ThisLeaveRequest.RequestedLeaveStartDate = null;
@@ -437,6 +544,18 @@ namespace The_Academy_Leave_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(LeaveRequestViewModel leaveRequestViewModel)
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             if (ModelState.IsValid)
             {
                 ////populate static values here
@@ -478,6 +597,18 @@ namespace The_Academy_Leave_System.Controllers
         // GET: LeaveRequests/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -507,6 +638,18 @@ namespace The_Academy_Leave_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, LeaveRequestViewModel leaveRequestViewModel)
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             if (id != leaveRequestViewModel.ThisLeaveRequest.Id)
             {
                 return NotFound();
@@ -551,6 +694,18 @@ namespace The_Academy_Leave_System.Controllers
         // GET: LeaveRequests/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -571,6 +726,18 @@ namespace The_Academy_Leave_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            // Test online and database connectivity.
+            if (OnlineConnectivity.CheckDatabaseAvailability(_context) == false)
+            {
+                return View("ConnectivityIssue");
+            }
+
+
+            // Redirect user to login screen if they are not logged in.
+            if (CurrentUser.Email == null)
+            {
+                return LocalRedirect("/Identity/Account/Login");
+            }
             var leaveRequest = await _context.LeaveRequests.FindAsync(id);
             leaveRequest.IsCancelled = true;
 
@@ -588,6 +755,7 @@ namespace The_Academy_Leave_System.Controllers
 
         public List<LeaveRequestViewModel> CheckForLeaveClashes(LeaveRequestViewModel leaveRequestViewModel)
         {
+
             List<LeaveRequestViewModel> leaveClashesViewModels = new List<LeaveRequestViewModel>();
             LeaveRequestViewModel leaveRequestViewModelLocal;
            List<int> addedRequests = new List<int>();

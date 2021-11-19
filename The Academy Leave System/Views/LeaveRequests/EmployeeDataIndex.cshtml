@@ -1,7 +1,7 @@
 ﻿@model The_Academy_Leave_System.ViewModels.LeaveRequestViewModel
 
 
-<h1>Edit This Request</h1>
+<h1>Employee Leave Reports</h1>
 
 
 <hr />
@@ -12,11 +12,11 @@
             <input type="hidden" asp-for="ThisLeaveRequest.Id" />
 
 
-            @Html.HiddenFor(m => m.SelectedUserId)
+            @Html.HiddenFor(m => m.SelectedUserId, new { id = "SelectedUserId" })
 
 
             <div id="UserDiv" class="form-group">
-                <label asp-for="SelectedUserId" class="control-label"></label>
+                <label asp-for="SelectedUserId" class="control-label">User Name</label>
                 @*<input id="HalfDayIdentification" asp-for="HalfDayIdentifierOptions" class="form-control" />*@
                 <select id="User" asp-for="SelectedUserId" class="form-control" asp-items="Model.Users">
                     <option value="-1" selected disabled>-- Select A User --</option>
@@ -33,3 +33,23 @@
         </form>
     </div>
 </div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+        asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+        asp-fallback-test="window.jQuery"
+        crossorigin="anonymous"
+        integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+</script>
+<script>
+    // Update hidden field with selected value.
+    $('#User').change(function () {
+        $('#SelectedUserId').val($('#User').find(":selected").val())
+    });
+</script>

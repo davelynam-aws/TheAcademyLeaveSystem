@@ -448,3 +448,5 @@ C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\o
 C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\LeaveRequests\SupervisorIndex.cshtml.g.cs
 C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\LeaveRequests\ManagerIndex.cshtml.g.cs
 C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\LeaveRequests\EmployeeDataIndex.cshtml.g.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\LeaveRequests\EmployeeData.cshtml.g.cs
+C:\Users\dlynam\source\repos\The Academy Leave System\The Academy Leave System\obj\Debug\netcoreapp3.1\Razor\Views\Shared\ConnectivityIssue.cshtml.g.cs

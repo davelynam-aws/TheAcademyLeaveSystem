@@ -44,9 +44,11 @@ namespace The_Academy_Leave_System.Models
         [Column(name:"HalfDayIdentification")]
         public string HalfDayIdentification { get; set; }
 
+        [Display(Name = "Approved Date")]
         [Column(name:"ApprovedDateTime")]
         public DateTime ApprovedDateTime { get; set; }
 
+        [Display(Name = "Rejected Date")]
         [Column(name:"RejectedDateTime")]
         public DateTime RejectedDateTime { get; set; }
 
@@ -56,6 +58,7 @@ namespace The_Academy_Leave_System.Models
         [Column(name:"UserNotified")]
         public bool UserNotified { get; set; }
 
+        [Display(Name = "Cancelled")]
         [Column(name:"IsCancelled")]
         public bool IsCancelled { get; set; }
 
