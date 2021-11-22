@@ -75,7 +75,7 @@ namespace The_Academy_Leave_System.Controllers
             List<string> notificationMessage = new List<string>();
 
             // Get this user's notifications
-            leaveRequestNotifications = _context.LeaveRequests.Where(lr => lr.UserId == CurrentUser.Id && lr.UserNotified == false && (lr.ApprovedDateTime > nullDateTime || lr.ApprovedDateTime > nullDateTime)).ToList();
+            leaveRequestNotifications = _context.LeaveRequests.Where(lr => lr.UserId == CurrentUser.Id && lr.IsCancelled == false && lr.UserNotified == false && (lr.ApprovedDateTime > nullDateTime || lr.ApprovedDateTime > nullDateTime)).ToList();
 
             if (leaveRequestNotifications.Count > 0)
             {
@@ -109,7 +109,7 @@ namespace The_Academy_Leave_System.Controllers
                     foreach(User u in teamUsers)
                     {
 
-                        leaveRequestNotifications = _context.LeaveRequests.Where(lr => lr.UserId == u.Id && lr.ManagerNotified == false).ToList();
+                        leaveRequestNotifications = _context.LeaveRequests.Where(lr => lr.UserId == u.Id && lr.IsCancelled == false && lr.ManagerNotified == false).ToList();
 
                         if (leaveRequestNotifications.Count > 0)
                         {
@@ -140,7 +140,7 @@ namespace The_Academy_Leave_System.Controllers
                     foreach (User u in supervisorUsers)
                     {
 
-                        leaveRequestNotifications = _context.LeaveRequests.Where(lr => lr.UserId == u.Id && lr.ManagerNotified == false).ToList();
+                        leaveRequestNotifications = _context.LeaveRequests.Where(lr => lr.UserId == u.Id && lr.IsCancelled == false && lr.ManagerNotified == false).ToList();
 
                         if (leaveRequestNotifications.Count > 0)
                         {
